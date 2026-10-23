@@ -1,0 +1,558 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/TuanSoCode/SteamData-Pipeline/blob/main/SteamCleanedData.ipynp\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "Cg6XWorNCkTV",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 778
+        },
+        "outputId": "5b798c93-d12c-4d73-f518-8cfad0906a9c"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Downloading to /root/.cache/kagglehub/datasets/fronkongames/steam-games-dataset/55.archive...\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "100%|██████████| 305M/305M [00:01<00:00, 160MB/s]"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Extracting files...\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['games.csv', 'games.json']\n",
+            "Mounted at /content/drive\n",
+            "Các cột nghi vấn: [(0, 'AppID'), (7, 'DiscountDLC count')]\n",
+            "Collecting pandera\n",
+            "  Downloading pandera-0.34.1-py3-none-any.whl.metadata (11 kB)\n",
+            "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.13/dist-packages (from pandera) (26.3)\n",
+            "Requirement already satisfied: pydantic in /usr/local/lib/python3.13/dist-packages (from pandera) (2.14.1)\n",
+            "Requirement already satisfied: typeguard in /usr/local/lib/python3.13/dist-packages (from pandera) (4.6.0)\n",
+            "Requirement already satisfied: typing_extensions in /usr/local/lib/python3.13/dist-packages (from pandera) (4.16.0)\n",
+            "Collecting typing_inspect>=0.6.0 (from pandera)\n",
+            "  Downloading typing_inspect-0.9.0-py3-none-any.whl.metadata (1.5 kB)\n",
+            "Collecting mypy-extensions>=0.3.0 (from typing_inspect>=0.6.0->pandera)\n",
+            "  Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)\n",
+            "Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.13/dist-packages (from pydantic->pandera) (0.8.0)\n",
+            "Requirement already satisfied: pydantic-core==2.50.1 in /usr/local/lib/python3.13/dist-packages (from pydantic->pandera) (2.50.1)\n",
+            "Requirement already satisfied: typing-inspection>=0.4.4 in /usr/local/lib/python3.13/dist-packages (from pydantic->pandera) (0.4.4)\n",
+            "Downloading pandera-0.34.1-py3-none-any.whl (535 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m535.0/535.0 kB\u001b[0m \u001b[31m9.3 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading typing_inspect-0.9.0-py3-none-any.whl (8.8 kB)\n",
+            "Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)\n",
+            "Installing collected packages: mypy-extensions, typing_inspect, pandera\n",
+            "Successfully installed mypy-extensions-1.1.0 pandera-0.34.1 typing_inspect-0.9.0\n",
+            "Có 6 chỗ vi phạm\n",
+            "column   check             \n",
+            "Name     not_nullable          1\n",
+            "Website  str_contains('\\.')    5\n",
+            "dtype: int64\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "  schema_context   column               check check_number  \\\n",
+              "0         Column     Name        not_nullable         None   \n",
+              "1         Column  Website  str_contains('\\.')            0   \n",
+              "2         Column  Website  str_contains('\\.')            0   \n",
+              "3         Column  Website  str_contains('\\.')            0   \n",
+              "4         Column  Website  str_contains('\\.')            0   \n",
+              "5         Column  Website  str_contains('\\.')            0   \n",
+              "\n",
+              "                   failure_case   index  \n",
+              "0                           NaN   44432  \n",
+              "1       http://myfakegoblinwife     953  \n",
+              "2                       http://   31933  \n",
+              "3  http://figarogamestudioscom/   71375  \n",
+              "4                      https://   72256  \n",
+              "5         https://BloomingAshes  125496  "
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-6e0ad0a9-2322-4ebf-8284-a53cdcd45d69\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>schema_context</th>\n",
+              "      <th>column</th>\n",
+              "      <th>check</th>\n",
+              "      <th>check_number</th>\n",
+              "      <th>failure_case</th>\n",
+              "      <th>index</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>Column</td>\n",
+              "      <td>Name</td>\n",
+              "      <td>not_nullable</td>\n",
+              "      <td>None</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>44432</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>Column</td>\n",
+              "      <td>Website</td>\n",
+              "      <td>str_contains('\\.')</td>\n",
+              "      <td>0</td>\n",
+              "      <td>http://myfakegoblinwife</td>\n",
+              "      <td>953</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>Column</td>\n",
+              "      <td>Website</td>\n",
+              "      <td>str_contains('\\.')</td>\n",
+              "      <td>0</td>\n",
+              "      <td>http://</td>\n",
+              "      <td>31933</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>Column</td>\n",
+              "      <td>Website</td>\n",
+              "      <td>str_contains('\\.')</td>\n",
+              "      <td>0</td>\n",
+              "      <td>http://figarogamestudioscom/</td>\n",
+              "      <td>71375</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>Column</td>\n",
+              "      <td>Website</td>\n",
+              "      <td>str_contains('\\.')</td>\n",
+              "      <td>0</td>\n",
+              "      <td>https://</td>\n",
+              "      <td>72256</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>5</th>\n",
+              "      <td>Column</td>\n",
+              "      <td>Website</td>\n",
+              "      <td>str_contains('\\.')</td>\n",
+              "      <td>0</td>\n",
+              "      <td>https://BloomingAshes</td>\n",
+              "      <td>125496</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-6e0ad0a9-2322-4ebf-8284-a53cdcd45d69')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-6e0ad0a9-2322-4ebf-8284-a53cdcd45d69 button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-6e0ad0a9-2322-4ebf-8284-a53cdcd45d69');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "summary": "{\n  \"name\": \"    display(bang_loi\",\n  \"rows\": 6,\n  \"fields\": [\n    {\n      \"column\": \"schema_context\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"Column\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"column\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Website\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"check\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"str_contains('\\\\.')\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"check_number\",\n      \"properties\": {\n        \"dtype\": \"date\",\n        \"min\": 0,\n        \"max\": 0,\n        \"num_unique_values\": 1,\n        \"samples\": [\n          0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"failure_case\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 5,\n        \"samples\": [\n          \"http://\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"index\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 42556,\n        \"min\": 953,\n        \"max\": 125496,\n        \"num_unique_values\": 6,\n        \"samples\": [\n          44432\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {}
+        }
+      ],
+      "source": [
+        "import pandas as pd\n",
+        "import kagglehub\n",
+        "# Download latest version\n",
+        "path = kagglehub.dataset_download(\"fronkongames/steam-games-dataset\")\n",
+        "import os\n",
+        "print(os.listdir(path))\n",
+        "from google.colab import drive\n",
+        "drive.mount('/content/drive')\n",
+        "\n",
+        "import sys\n",
+        "sys.path.append('/content/drive/MyDrive')\n",
+        "from csv_helper import ba_khi,ba_dao,export_styled_excel\n",
+        "\n",
+        "df= ba_khi(path+ \"/games.csv\")\n",
+        "df = ba_dao(path + \"/games.csv\", \"DiscountDLC count\", [\"Discount\", \"DLC count\"])\n",
+        "!pip install pandera\n",
+        "import pandera.pandas as pa\n",
+        "from pandera import Column,Check\n",
+        "from pandera.errors import SchemaErrors\n",
+        "schema=pa.DataFrameSchema({\n",
+        "\"AppID\":Column(int, unique=True,nullable=False),\n",
+        "\"Name\":Column(str,nullable=False),\n",
+        "\"Price\":Column(float,Check.greater_than_or_equal_to(0)),\n",
+        "\"Developers\":Column(str,nullable=True),\n",
+        "\"Publishers\":Column(str,nullable=True),\n",
+        "\"Required age\":Column(int,Check.in_range(0,21)),\n",
+        "\"Website\": pa.Column(str, pa.Check.str_contains(r'\\.'), nullable=True),\n",
+        "})\n",
+        "\n",
+        "\n",
+        "\n",
+        "try:\n",
+        "    schema.validate(df,lazy=True)\n",
+        "    print(\"✅✅✅✅✅🤑🤑🤑🤑\")\n",
+        "except SchemaErrors as loi:\n",
+        "    bang_loi = loi.failure_cases\n",
+        "    print(\"Có\", len(bang_loi), \"chỗ vi phạm\")\n",
+        "    print(bang_loi.groupby([\"column\", \"check\"]).size())\n",
+        "    display(bang_loi.head(10))"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "nULd7m5vJgWu"
+      },
+      "outputs": [],
+      "source": [
+        "df.describe()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jCoTP_DQOZMa"
+      },
+      "outputs": [],
+      "source": [
+        "df.info()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "516wMGpgO3X3"
+      },
+      "outputs": [],
+      "source": [
+        "(df.isnull().sum()/ len(df) * 100).sort_values(ascending=False)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "qXRznmBmeRCY"
+      },
+      "outputs": [],
+      "source": [
+        "df.head()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "B1YiZfRigKlB"
+      },
+      "outputs": [],
+      "source": [
+        "df.nunique()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "zGkKr7guknc8"
+      },
+      "outputs": [],
+      "source": [
+        "df.info()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "l4fXCTzDd6eL"
+      },
+      "outputs": [],
+      "source": [
+        "mask=df[\"Website\"].notna() & ~df[\"Website\"].str.contains(r'\\.',na=False)\n",
+        "df.loc[mask, \"Website\"]=None\n",
+        "mask_kiem=df[\"Website\"].notna() & ~df[\"Website\"].str.contains(r'\\.',na=False)\n",
+        "print(mask_kiem.sum())"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "mkC6CJ8SDyXt"
+      },
+      "outputs": [],
+      "source": [
+        "df=df.drop(columns={\"Movies\",\"Score rank\",\"Metacritic url\",\"Reviews\"})"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "FUPVzTZ3UXA3"
+      },
+      "outputs": [],
+      "source": [
+        "import numpy as np\n",
+        "for col in [\"Full audio languages\",\"Supported languages\"]:\n",
+        "\n",
+        "    df[col] = df[col].apply(\n",
+        "    lambda x: \", \".join(x) if isinstance(x, list)\n",
+        "    else (x if pd.isna(x) else str(x).replace('[', '').replace(']', '').replace(\"'\",\"\").strip())\n",
+        ")\n",
+        "df=df.replace('',np.nan)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "reIL-yhKfpZA"
+      },
+      "outputs": [],
+      "source": [
+        "def fill(df,rule):\n",
+        "   for f in df.columns:\n",
+        "      if f in rule:\n",
+        "        df[f]=df[f].fillna(rule[f])\n",
+        "      else:\n",
+        "        df[f]=df[f].fillna(\"Unknown\")\n",
+        "   return df\n",
+        "\n",
+        "rule={\"Notes\":\"Not provided\"}\n",
+        "df=fill(df,rule)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Y6u6BH8pfGi3"
+      },
+      "outputs": [],
+      "source": [
+        "def save(df,unique_limit=255):\n",
+        "   for f in df.columns:\n",
+        "      if df[f].dtype== \"bool\":\n",
+        "        continue\n",
+        "      if df[f].dtype== \"int64\" and df[f].min() >=0 and df[f].max() <= 255:\n",
+        "         df[f]=df[f].astype(\"uint8\")\n",
+        "      elif df[f].nunique() <= unique_limit:df[f]=df[f].astype(\"category\")\n",
+        "   return df\n",
+        "df=save(df)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Wmm4rqJwFYp3"
+      },
+      "outputs": [],
+      "source": [
+        "print(\n",
+        "    f\"Size: {df.shape} | Null : {df.isnull().sum().sum()} | dupli:\"\n",
+        "    f\" {df.duplicated().sum()}\"\n",
+        ")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "TJaQRoYv_0IU",
+        "outputId": "62897afc-59e4-4411-b9f5-10ee1626b3db"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Shape: (125855, 40) | Null: 849844 | Dupe: 0\n",
+            "\n",
+            " datatypes:\n",
+            "object     19\n",
+            "int64      15\n",
+            "float64     3\n",
+            "bool        3\n",
+            "Name: count, dtype: int64\n"
+          ]
+        }
+      ],
+      "source": [
+        "print(f\"Shape: {df.shape} | Null: {df.isnull().sum().sum()} | Dupe: {df.duplicated().sum()}\")\n",
+        "print(f\"\\n datatypes:\\n{df.dtypes.value_counts()}\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "FdcnBjL9a6r3"
+      },
+      "outputs": [],
+      "source": [
+        "!pip install xlsxwriter openpyxl\n",
+        "import importlib\n",
+        "from csv_helper import export_styled_excel,export_files\n",
+        "\n",
+        "df['Primary Genre'] = df['Genres'].apply(lambda x: str(x).split(',')[0])\n",
+        "df_genre = df.groupby('Primary Genre')['Price'].mean().reset_index()\n",
+        "df_genre.columns = ['Genre', 'Avg Price ($)']\n",
+        "df_genre['Avg Price ($)'] = df_genre['Avg Price ($)'].round(2)\n",
+        "df_genre = df_genre.sort_values(by='Avg Price ($)', ascending=False).head(10)\n",
+        "\n",
+        "export_styled_excel(df_genre, \"/content/drive/MyDrive/Steam_Report\")\n",
+        "export_files(df, \"/content/drive/MyDrive/Steam_FullData\")"
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPPj6vMHBFJaif3tGfXrZsF",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
