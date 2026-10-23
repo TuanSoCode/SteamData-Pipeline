@@ -27,7 +27,7 @@ Instead of crying, I built an automated ETL (Extract, Transform, Load) pipeline 
 - **Optimization:** Converted data types (`uint8`, `category`) to slash memory usage by 25%.
 
 > 📸 *Screenshot of the final, beautifully styled Excel report:*
-https://drive.google.com/file/d/1iUzgHOsrHY9fwFtrYX6XZva4rDU4tsQx/view?usp=drivesdk
+![Excel Report](https://drive.google.com/file/d/1iUzghHOsrHY9fwFtrYX6XZva4rDU4tsQx/preview)
 
 
 ## 💡 The Business Value
