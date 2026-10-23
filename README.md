@@ -27,8 +27,7 @@ Instead of crying, I built an automated ETL (Extract, Transform, Load) pipeline 
 - **Optimization:** Converted data types (`uint8`, `category`) to slash memory usage by 25%.
 
 > 📸 *Screenshot of the final, beautifully styled Excel report:*
-![Excel Report]
-> https://raw.githubusercontent.com/TuanSoCode/SteamData-Pipeline/refs/heads/main/Screenshot_2026-10-23-22-46-26-838_com.google.android.apps.docs.editors.sheets-edit.jpg
+![Excel Report](https://raw.githubusercontent.com/TuanSoCode/SteamData-Pipeline/refs/heads/main/Screenshot_2026-10-23-22-46-26-838_com.google.android.apps.docs.editors.sheets-edit.jpg)
 
 
 ## 💡 The Business Value
