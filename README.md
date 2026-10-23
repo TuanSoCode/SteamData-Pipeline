@@ -28,7 +28,7 @@ Instead of crying, I built an automated ETL (Extract, Transform, Load) pipeline 
 
 > 📸 *Screenshot of the final, beautifully styled Excel report:*
 https://drive.google.com/file/d/1iUzgHOsrHY9fwFtrYX6XZva4rDU4tsQx/view?usp=drivesdk
-> `![Clean Data]
+
 
 ## 💡 The Business Value
 This project proves I don't just "know Python." **I can take a completely broken, real-world dataset and turn it into a professional, client-ready report in seconds.** No drama. Just results.
